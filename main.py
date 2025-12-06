@@ -2,11 +2,14 @@ import os
 import json
 from openai import OpenAI
 
-# 1. SETUP OPENAI (We skip Reddit for now)
+# 1. SETUP GROQ (Using Llama 3 via Groq API)
 print("Initializing AI...")
 
-# Make sure you added OPENAI_API_KEY to your Replit Secrets!
-client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+# Make sure you added GROQ_API_KEY to your Replit Secrets!
+client = OpenAI(
+    base_url="https://api.groq.com/openai/v1",
+    api_key=os.environ['GROQ_API_KEY']
+)
 
 CURRENT_SPOT = 58.50 
 
@@ -36,13 +39,13 @@ mock_posts = [
     },
     {
         "author": "ScammerGuy",
-        "flair": None, # No flair test
+        "flair": None,
         "title": "[WTS] Gold chain",
         "body": "Just a gold chain $500."
     }
 ]
 
-# 3. THE AI ANALYZER (Same as before)
+# 3. THE AI ANALYZER
 def analyze_post(title, body):
     print(f"  -> Analyzing deal logic for: {title[:25]}...")
     
@@ -74,7 +77,7 @@ def analyze_post(title, body):
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="llama3-8b-8192",
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"}
         )
