@@ -84,14 +84,21 @@ def analyze_post(title, body, current_spot):
     - Peace/Morgan = 0.773 oz per coin.
     - Libertad/Eagle/Maple/Britannia = 1.0 oz per coin.
     - War Nickel = 0.056 oz.
+    - 90% Silver = 0.715 oz per $1 Face Value or "FV". If listing is for '$10 FV', then Quantity = 10 and Weight = 0.715.
 
-    **YOUR TASK:**
+   **YOUR TASK:**
     1. Identify items, Price, and **QUANTITY AVAILABLE** (default to 1 if unknown).
        - If price says "ea", it is Price Per Item.
+       - If item is listed as "$X FV" or "Face Value", Quantity is X.
+       
     2. **CATEGORY:**
        - "Premium": Libertad, Eagle, Morgan, Peace, Engelhard, Vintage, Key Date.
        - "Bullion": Junk, 90%, 40%, War Nickel, Generic Round/Bar.
-    3. Calculate Weight Per Item (oz). MUST BE A SINGLE NUMBER.
+       
+    3. Calculate Weight Per Item (oz). 
+       - If item is 90% Silver, Weight is 0.715.
+       - If item is 40% Silver, Weight is 0.295.
+       - MUST BE A RAW FLOAT (e.g. 0.715). DO NOT WRITE EQUATIONS, FORMULAS, COMMENTS, OR TEXT.
 
     If Price is for a LOT/ROLL/TUBE, treat 'Quantity' as 1 (1 Lot). If Price is 'each', 'Quantity' is the coin count
 
