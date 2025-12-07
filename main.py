@@ -68,6 +68,10 @@ def get_latest_posts():
         return []
 
 def analyze_post(title, body, current_spot):
+    # Define your tiers
+    PRIMARY_MODEL = "llama-3.3-70b-versatile"
+    FALLBACK_MODEL = "llama-3.1-8b-instant"
+    
     prompt = f"""
     You are a precious metals analyzer.
     Current Silver Spot Price: ${current_spot}/oz.
@@ -87,7 +91,7 @@ def analyze_post(title, body, current_spot):
     2. **CATEGORY:**
        - "Premium": Libertad, Eagle, Morgan, Peace, Engelhard, Vintage, Key Date.
        - "Bullion": Junk, 90%, 40%, War Nickel, Generic Round/Bar.
-    3. Calculate Weight Per Item (oz). MUST BE A SINGLE NUMBER (e.g. 0.715). DO NOT WRITE FORMULAS OR MULTIPLICATION SIGNS.
+    3. Calculate Weight Per Item (oz). MUST BE A SINGLE NUMBER.
 
     If Price is for a LOT/ROLL/TUBE, treat 'Quantity' as 1 (1 Lot). If Price is 'each', 'Quantity' is the coin count
 
@@ -108,16 +112,39 @@ def analyze_post(title, body, current_spot):
     TITLE: {title}
     BODY: {body}
     """
+    
+    # --- NEW FALLBACK LOGIC ---
     try:
+        # Attempt 1: Primary Model (70B)
         response = client.chat.completions.create(
-            model=GROQ_MODEL,
+            model=PRIMARY_MODEL,
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"}
         )
         return json.loads(response.choices[0].message.content)
+
     except Exception as e:
-        logging.error(f"AI Error: {e}")
-        return None
+        # Check if it's a Rate Limit error (usually contains 429 or 'rate_limit')
+        error_msg = str(e).lower()
+        if "429" in error_msg or "rate limit" in error_msg:
+            logging.warning(f"⚠️ Rate Limit hit on 70b. Switching to 8b Fallback...")
+            print(f"   ⚠️ Rate Limit! Fallback to 8b model...")
+            
+            try:
+                # Attempt 2: Fallback Model (8B)
+                response = client.chat.completions.create(
+                    model=FALLBACK_MODEL,
+                    messages=[{"role": "user", "content": prompt}],
+                    response_format={"type": "json_object"}
+                )
+                return json.loads(response.choices[0].message.content)
+            except Exception as e2:
+                logging.error(f"❌ Fallback Failed: {e2}")
+                return None
+        else:
+            # Real error (not rate limit)
+            logging.error(f"AI Error: {e}")
+            return None
 
 # --- MAIN INFINITE LOOP ---
 current_spot = get_live_spot()
@@ -156,10 +183,22 @@ while True:
                 for deal in data['deals']:
                     # --- RESTORED MATH BLOCK ---
                     qty = deal.get('quantity_available', 1)
-                    price = deal['listed_price']
-                    weight = deal['weight_per_item_oz']
+                    price = deal.get('listed_price', 0) # Use .get() for safety
+                    weight = deal.get('weight_per_item_oz', 0) # Use .get() for safety
 
-                    if weight == 0: continue
+                    # SAFETY CHECK: If AI returned None or 0, skip
+                    if not weight or not price: 
+                        continue
+
+                    # Ensure they are numbers (sometimes AI returns strings "1.0")
+                    try:
+                        qty = float(qty)
+                        price = float(price)
+                        weight = float(weight)
+                    except ValueError:
+                        continue # Skip if AI returned text instead of numbers
+
+                    total_oz = weight * qty
 
                     total_oz = weight * qty
                     final_price_per_oz = ((price * qty) + ship_cost) / total_oz
@@ -170,14 +209,12 @@ while True:
 
                     # --- END RESTORED MATH BLOCK ---
 
-                    if final_price_per_oz < threshold:
-                        deals_found_session += 1
-                        msg = f"[{get_time()}] 🚨 {deal['category']} DEAL: {deal['item_name']} (x{qty})\n   Price: ${final_price_per_oz:.2f}/oz"
-                        print(msg)
-                        logging.info(f"DEAL FOUND: {msg} | Link: {post['link']}")
-                    else:
-                        print(f"   [{get_time()}] [Reject] {deal['item_name']} @ ${final_price_per_oz:.2f}/oz")
+                    # Sanity floor: if price/oz is unrealistically low, assume AI math error
+                    min_floor = current_spot * 0.5  # e.g. 50% of spot; adjust if you like
 
+                    if final_price_per_oz < min_floor:
+                        print(f"   [{get_time()}] [Auto-Reject] {deal['item_name']} @ ${final_price_per_oz:.2f}/oz                                         (suspiciously low, likely AI math error)")
+                        continue
         # HUMANIZED SLEEP
         sleep_time = random.randint(60, 90)
         print(f"[{get_time()}] 💤 Sleeping {sleep_time}s...", end="\r")
