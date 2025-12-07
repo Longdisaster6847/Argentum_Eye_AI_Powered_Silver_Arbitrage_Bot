@@ -1,0 +1,97 @@
+2025-12-07 00:18:23,593 - INFO - Bot Started. Spot: $58.42
+2025-12-07 00:18:25,102 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:25,108 - INFO - DEAL FOUND: [00:18:25] 🚨 Premium DEAL: 2010 .999 ASE (x2)
+   Price: $67.50/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg44yl/wts_ase_silver_under_spot_copper_rounds_and/
+2025-12-07 00:18:25,109 - INFO - DEAL FOUND: [00:18:25] 🚨 Premium DEAL: 1922-S Peace Dollar (x1)
+   Price: $67.27/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg44yl/wts_ase_silver_under_spot_copper_rounds_and/
+2025-12-07 00:18:25,393 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:25,395 - INFO - DEAL FOUND: [00:18:25] 🚨 Bullion DEAL: Unknown Item (x1)
+   Price: $0.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg3wyv/wts_giveaway/
+2025-12-07 00:18:28,100 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:28,101 - INFO - DEAL FOUND: [00:18:28] 🚨 Premium DEAL: 1985 Prospect (x1)
+   Price: $68.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg3vst/wts_libertads_geigers_rutlands_yeagers_ase/
+2025-12-07 00:18:28,102 - INFO - DEAL FOUND: [00:18:28] 🚨 Premium DEAL: Tokelau Icon Mona Lisa (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg3vst/wts_libertads_geigers_rutlands_yeagers_ase/
+2025-12-07 00:18:28,102 - INFO - DEAL FOUND: [00:18:28] 🚨 Premium DEAL: 1oz Buffalo (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg3vst/wts_libertads_geigers_rutlands_yeagers_ase/
+2025-12-07 00:18:28,267 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:28,825 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:28,827 - INFO - DEAL FOUND: [00:18:28] 🚨 Premium DEAL: PAMP Liberty Freedom Buffalo Silver 1 oz (x1)
+   Price: $57.50/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg382c/wts_gold_1425g_pamp_1oz_silver_under_spot_free/
+2025-12-07 00:18:28,828 - INFO - DEAL FOUND: [00:18:28] 🚨 Premium DEAL: 2025 Niue $2 – 1 oz .999 Silver Ethereum Coin (x1)
+   Price: $59.50/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg382c/wts_gold_1425g_pamp_1oz_silver_under_spot_free/
+2025-12-07 00:18:30,353 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:30,355 - INFO - DEAL FOUND: [00:18:30] 🚨 Premium DEAL: Non-1921 Cull Morgan Silver Dollars (x11)
+   Price: $57.74/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2wu7/wts_under_melt_ases_morgans_peace_dollars_graded/
+2025-12-07 00:18:30,355 - INFO - DEAL FOUND: [00:18:30] 🚨 Premium DEAL: 1921 Morgan Silver Dollar w/ Gold Toning (x1)
+   Price: $67.27/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2wu7/wts_under_melt_ases_morgans_peace_dollars_graded/
+2025-12-07 00:18:30,355 - INFO - DEAL FOUND: [00:18:30] 🚨 Premium DEAL: 1921 Morgan Silver Dollar w/ Dent (x1)
+   Price: $65.98/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2wu7/wts_under_melt_ases_morgans_peace_dollars_graded/
+2025-12-07 00:18:30,355 - INFO - DEAL FOUND: [00:18:30] 🚨 Premium DEAL: 1922/1923 Peace Dollars (x8)
+   Price: $59.35/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2wu7/wts_under_melt_ases_morgans_peace_dollars_graded/
+2025-12-07 00:18:30,355 - INFO - DEAL FOUND: [00:18:30] 🚨 Premium DEAL: 1oz ASE (x9)
+   Price: $60.78/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2wu7/wts_under_melt_ases_morgans_peace_dollars_graded/
+2025-12-07 00:18:30,356 - INFO - DEAL FOUND: [00:18:30] 🚨 Premium DEAL: Non-1921 Morgan Silver Dollars (x18)
+   Price: $61.31/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2wu7/wts_under_melt_ases_morgans_peace_dollars_graded/
+2025-12-07 00:18:31,115 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:31,118 - INFO - DEAL FOUND: [00:18:31] 🚨 Premium DEAL: 1 oz The Kingdom card (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2ogx/wts_1_oz_art_bars_2_oz_hayley_bug_1_oz_the/
+2025-12-07 00:18:31,972 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:31,974 - INFO - DEAL FOUND: [00:18:31] 🚨 Bullion DEAL: 1882 Argentina 10 centavos (x1)
+   Price: $43.36/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2fk5/wts_small_gold_argentina_silver_10_20_50_centavos/
+2025-12-07 00:18:31,974 - INFO - DEAL FOUND: [00:18:31] 🚨 Bullion DEAL: 1883 Argentina 10 centavos (x1)
+   Price: $43.36/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2fk5/wts_small_gold_argentina_silver_10_20_50_centavos/
+2025-12-07 00:18:31,974 - INFO - DEAL FOUND: [00:18:31] 🚨 Bullion DEAL: 1882 Argentina 20 centavos (x1)
+   Price: $32.17/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2fk5/wts_small_gold_argentina_silver_10_20_50_centavos/
+2025-12-07 00:18:31,974 - INFO - DEAL FOUND: [00:18:31] 🚨 Bullion DEAL: 1883 Argentina 50 centavos (x1)
+   Price: $24.78/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2fk5/wts_small_gold_argentina_silver_10_20_50_centavos/
+2025-12-07 00:18:31,974 - INFO - DEAL FOUND: [00:18:31] 🚨 Bullion DEAL: 1977 Argentina cien pesos (x1)
+   Price: $54.55/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2fk5/wts_small_gold_argentina_silver_10_20_50_centavos/
+2025-12-07 00:18:31,974 - INFO - DEAL FOUND: [00:18:31] 🚨 Bullion DEAL: 5oz Viking bar (x1)
+   Price: $1.20/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg2fk5/wts_small_gold_argentina_silver_10_20_50_centavos/
+2025-12-07 00:18:32,429 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:18:32,932 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:28:55,262 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:28:55,264 - INFO - DEAL FOUND: [00:28:55] 🚨 Premium DEAL: American Silver Eagle (x5)
+   Price: $61.20/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4ihq/wts_999_silver_generics_premiums_ases/
+2025-12-07 00:28:55,264 - INFO - DEAL FOUND: [00:28:55] 🚨 Premium DEAL: Niue $2 Mickey and Friends (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4ihq/wts_999_silver_generics_premiums_ases/
+2025-12-07 00:28:55,265 - INFO - DEAL FOUND: [00:28:55] 🚨 Premium DEAL: Niue $2 Sword of Truth (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4ihq/wts_999_silver_generics_premiums_ases/
+2025-12-07 00:28:55,266 - INFO - DEAL FOUND: [00:28:55] 🚨 Premium DEAL: Niue $2 Spider Man (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4ihq/wts_999_silver_generics_premiums_ases/
+2025-12-07 00:28:55,266 - INFO - DEAL FOUND: [00:28:55] 🚨 Premium DEAL: Niue $2 Aerosmith 50 Years (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4ihq/wts_999_silver_generics_premiums_ases/
+2025-12-07 00:28:55,267 - INFO - DEAL FOUND: [00:28:55] 🚨 Premium DEAL: GSM Donald Trump 45th Prez Round (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4ihq/wts_999_silver_generics_premiums_ases/
+2025-12-07 00:34:43,383 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-07 00:34:43,385 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Raphael (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,385 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Michael (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,385 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Gabriel (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,385 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Country Road (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,385 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Creature (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Loch Ness Monster (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Aries (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Intaglio Sagittarius (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Dead Men Tell no Tales (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: AUS Year of the Dragon (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Scottsdale unicorn 2023 (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Zombucks Starving (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Zombucks The Saint (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Zombucks Slayed (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/
+2025-12-07 00:34:43,386 - INFO - DEAL FOUND: [00:34:43] 🚨 Premium DEAL: Zombucks The Barber (x1)
+   Price: $66.00/oz | Link: https://www.reddit.com/r/Pmsforsale/comments/1pg4n1y/wts_zombucksintagliogovt_near_spot/

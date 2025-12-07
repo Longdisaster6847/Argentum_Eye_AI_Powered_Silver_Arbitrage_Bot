@@ -4,15 +4,24 @@ from openai import OpenAI
 import feedparser
 from bs4 import BeautifulSoup
 import time
+import random
+import logging
 import yfinance as yf
 from datetime import datetime
 
 # --- CONFIGURATION ---
 RSS_URL = "https://www.reddit.com/r/Pmsforsale/new/.rss"
 GROQ_MODEL = "llama-3.3-70b-versatile"
+LOG_FILE = "argentum_log.txt"
 
-# 1. SETUP GROQ CLIENT
-print("Initializing AI Client...")
+# --- SETUP LOGGING ---
+logging.basicConfig(
+    filename=LOG_FILE, 
+    level=logging.INFO, 
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+# 1. SETUP CLIENTS
 if 'GROQ_API_KEY' not in os.environ:
     print("❌ ERROR: GROQ_API_KEY not found in Secrets!")
     exit()
@@ -22,68 +31,65 @@ client = OpenAI(
     api_key=os.environ['GROQ_API_KEY']
 )
 
-# 2. LIVE SPOT PRICE FUNCTION
+# 2. HELPER FUNCTIONS
+def get_time():
+    return datetime.now().strftime("%H:%M:%S")
+
 def get_live_spot():
     try:
-        ticker = yf.Ticker("XAGUSD=X")
+        ticker = yf.Ticker("SI=F")
         data = ticker.history(period="1d")
         if not data.empty:
-            price = data['Close'].iloc[-1]
-            return round(price, 2)
+            return round(data['Close'].iloc[-1], 2)
     except Exception as e:
-        print(f"  [Spot Check Fail]: {e}")
+        logging.error(f"Spot Price Error: {e}")
+    return 58.50 # Fallback
 
-    return 58.50 
-
-# 3. RSS FETCHING
 def get_latest_posts():
-    print("  -> Fetching RSS...")
     headers = {'User-Agent': 'Mozilla/5.0'} 
-    feed = feedparser.parse(RSS_URL, request_headers=headers)
+    try:
+        feed = feedparser.parse(RSS_URL, request_headers=headers)
+        clean_posts = []
+        for entry in feed.entries[:10]:
+            if "[WTB]" in entry.title or "[WTT]" in entry.title:
+                continue
 
-    clean_posts = []
+            soup = BeautifulSoup(entry.summary, "html.parser")
+            for tag in soup.find_all(['del', 's', 'strike']):
+                tag.decompose()
+            clean_posts.append({
+                "title": entry.title,
+                "link": entry.link,
+                "body": soup.get_text()
+            })
+        return clean_posts
+    except Exception as e:
+        logging.error(f"RSS Fetch Error: {e}")
+        return []
 
-    for entry in feed.entries[:10]:
-        soup = BeautifulSoup(entry.summary, "html.parser")
-
-        for tag in soup.find_all(['del', 's', 'strike']):
-            tag.decompose()
-
-        text_body = soup.get_text()
-
-        clean_posts.append({
-            "title": entry.title,
-            "link": entry.link,
-            "body": text_body
-        })
-    return clean_posts
-
-# 4. AI ANALYSIS (With Dynamic Math)
 def analyze_post(title, body, current_spot):
-    print(f"  -> Sending to AI: {title[:30]}...")
-
-    melt_90_fv = current_spot * 0.715
-    melt_40_coin = current_spot * 0.1479 
-    melt_35_coin = current_spot * 0.0563 
-
     prompt = f"""
-    You are a math-focused precious metals analyzer.
+    You are a precious metals analyzer.
     Current Silver Spot Price: ${current_spot}/oz.
 
-    **CRITICAL MATH RULES:**
-    - 90% Silver = 0.715 oz per $1 Face Value (e.g. $10FV = 7.15oz).
-    - 40% Silver Half = 0.148 oz per coin.
-    - 35% War Nickel = 0.056 oz per coin.
-    - .999 Fine = 1.0 oz per coin.
+    **MATH RULES:**
+    - Kilo = 32.15 oz.
+    - 10oz Bar = 10.0 oz.
+    - 5oz Bar = 5.0 oz.
+    - 90% Silver = 0.715 oz per $1 Face Value.
+    - Peace/Morgan = 0.773 oz per coin.
+    - Libertad/Eagle/Maple/Britannia = 1.0 oz per coin.
+    - War Nickel = 0.056 oz.
 
     **YOUR TASK:**
-    1. Identify items.
-    2. Extract Price and Quantity. 
-       - If price says "ea" or "each", do NOT divide by quantity.
-    3. Calculate Total Pure Silver Weight in Ounces.
-    4. Calculate Price Per Ounce = (Price + Shipping) / Total Weight.
-       - **MUST BE A FINAL NUMBER (e.g. 25.50), NOT AN EQUATION.**
-    5. **FILTER:** ONLY return items where Price Per Ounce is LESS THAN ${current_spot}.
+    1. Identify items, Price, and **QUANTITY AVAILABLE** (default to 1 if unknown).
+       - If price says "ea", it is Price Per Item.
+    2. **CATEGORY:**
+       - "Premium": Libertad, Eagle, Morgan, Peace, Engelhard, Vintage, Key Date.
+       - "Bullion": Junk, 90%, 40%, War Nickel, Generic Round/Bar.
+    3. Calculate Weight Per Item (oz). MUST BE A SINGLE NUMBER (e.g. 0.715). DO NOT WRITE FORMULAS OR MULTIPLICATION SIGNS.
+
+    If Price is for a LOT/ROLL/TUBE, treat 'Quantity' as 1 (1 Lot). If Price is 'each', 'Quantity' is the coin count
 
     Return JSON ONLY:
     {{
@@ -91,8 +97,10 @@ def analyze_post(title, body, current_spot):
       "deals": [
         {{
           "item_name": "string",
+          "category": "Premium" or "Bullion",
           "listed_price": number,
-          "all_in_price_per_oz": number
+          "quantity_available": number,
+          "weight_per_item_oz": number
         }}
       ]
     }}
@@ -100,67 +108,86 @@ def analyze_post(title, body, current_spot):
     TITLE: {title}
     BODY: {body}
     """
-
     try:
         response = client.chat.completions.create(
             model=GROQ_MODEL,
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"}
         )
-        data = json.loads(response.choices[0].message.content)
-
-        verified_deals = []
-        if data and data.get('deals'):
-            for deal in data['deals']:
-                if deal['all_in_price_per_oz'] < current_spot:
-                    verified_deals.append(deal)
-                else:
-                    print(f"   [Auto-Reject] AI flagged {deal['item_name']} at ${deal['all_in_price_per_oz']}/oz (Above Spot)")
-            data['deals'] = verified_deals
-
-        return data
+        return json.loads(response.choices[0].message.content)
     except Exception as e:
-        print(f"  [AI ERROR]: {e}")
+        logging.error(f"AI Error: {e}")
         return None
 
-# --- MAIN LOOP ---
+# --- MAIN INFINITE LOOP ---
 current_spot = get_live_spot()
-print(f"\n--- STARTING INFINITE MONITOR (Spot: ${current_spot}) ---")
+print(f"\n--- STARTING ARGENTUM EYE (Spot: ${current_spot}) ---")
+logging.info(f"Bot Started. Spot: ${current_spot}")
+
 seen_links = set()
 last_spot_update = time.time()
+deals_found_session = 0
 
 while True:
     try:
+        # 1. Update Spot Price (Every 15 mins)
         if time.time() - last_spot_update > 900:
             new_spot = get_live_spot()
             if new_spot > 0:
                 current_spot = new_spot
-                print(f"\n💰 UPDATED SPOT PRICE: ${current_spot}")
+                print(f"[{get_time()}] 💰 Updated Spot: ${current_spot}")
             last_spot_update = time.time()
 
+        # 2. Fetch & Analyze Posts
         posts = get_latest_posts()
 
         for post in posts:
             if post['link'] in seen_links:
                 continue
-
             seen_links.add(post['link'])
-            print(f"\n🔎 New Post: {post['title']}")
+
+            print(f"\n[{get_time()}] 🔎 Checking: {post['title']}") 
 
             data = analyze_post(post['title'], post['body'], current_spot)
 
             if data and data.get('deals'):
-                msg = f"🚨 DEAL: {data['deals'][0]['item_name']} @ ${data['deals'][0]['all_in_price_per_oz']:.2f}/oz"
-                print(msg)
-            else:
-                print("   [PASS] No deals.")
+                ship_cost = data.get('shipping_cost', 6.00)
 
-        print(".", end="", flush=True)
-        time.sleep(60)
+                for deal in data['deals']:
+                    # --- RESTORED MATH BLOCK ---
+                    qty = deal.get('quantity_available', 1)
+                    price = deal['listed_price']
+                    weight = deal['weight_per_item_oz']
+
+                    if weight == 0: continue
+
+                    total_oz = weight * qty
+                    final_price_per_oz = ((price * qty) + ship_cost) / total_oz
+
+                    threshold = current_spot
+                    if deal['category'] == 'Premium':
+                        threshold = current_spot + 10.00
+
+                    # --- END RESTORED MATH BLOCK ---
+
+                    if final_price_per_oz < threshold:
+                        deals_found_session += 1
+                        msg = f"[{get_time()}] 🚨 {deal['category']} DEAL: {deal['item_name']} (x{qty})\n   Price: ${final_price_per_oz:.2f}/oz"
+                        print(msg)
+                        logging.info(f"DEAL FOUND: {msg} | Link: {post['link']}")
+                    else:
+                        print(f"   [{get_time()}] [Reject] {deal['item_name']} @ ${final_price_per_oz:.2f}/oz")
+
+        # HUMANIZED SLEEP
+        sleep_time = random.randint(60, 90)
+        print(f"[{get_time()}] 💤 Sleeping {sleep_time}s...", end="\r")
+        time.sleep(sleep_time)
 
     except KeyboardInterrupt:
-        print("\nStopping...")
+        print(f"\n🛑 Stopping. Total Deals Found: {deals_found_session}")
+        logging.info("Bot Stopped by User.")
         break
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"❌ Critical Error: {e}")
+        logging.critical(f"Loop Crash: {e}")
         time.sleep(60)
